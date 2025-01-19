@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabuleiro RPG</title>
+<style>
+  /* Tabuleiro responsivo */
+  #tabuleiro {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 colunas flexíveis */
+    grid-template-rows: repeat(10, 1fr);   /* 10 linhas flexíveis */
+    gap: 2px; /* Espaçamento entre células */
+    width: 90vw; /* 90% da largura da viewport */
+    max-width: 500px; /* Limite máximo para tabuleiros maiores */
+    aspect-ratio: 1 / 1; /* Força o tabuleiro a ser quadrado */
+    margin: auto; /* Centraliza na tela */
+    border: 2px solid #333;
+    background-color: #f0f0f0;
+  }
+
+  .celula {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+    border: 1px solid #999;
+  }
+
+  .jogador {
+    width: 70%; /* Redimensiona o jogador proporcional à célula */
+    height: 70%; /* Redimensiona o jogador proporcional à célula */
+    background-color: red;
+    border-radius: 50%;
+  }
+
+  /* Modal responsivo */
+  #modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #modal div {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  #closeModal {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #closeModal:hover {
+    background-color: #0056b3;
+  }
+
+  /* Centraliza o tabuleiro na tela */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+  }
+</style>
+
+
+</head>
+<body>
+  <h1>Tabuleiro RPG</h1>
+  <div id="tabuleiro"></div>
+  
+    <!-- Modal -->
+<div id="modal" style="display: none;">
+  <div style="background: white; padding: 20px; border-radius: 8px; max-width: 300px; margin: auto; text-align: center;">
+    <h2>Item Raro Encontrado!</h2>
+    <p>Você encontrou um item raro. Continue explorando!</p>
+    <button id="closeModal">Fechar</button>
+  </div>
+</div>
+
+  <script src="script.js"></script>
+  
+
+
+</body>
+</html>

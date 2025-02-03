@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário de Itens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .inventory, .equipment { border: 2px solid #333; padding: 10px; }
+        .inventory { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; }
+        .slot, .equip-slot { width: 50px; height: 50px; border: 1px solid #aaa; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; }
+        .item { width: 40px; height: 40px; cursor: grab; display: flex; align-items: center; justify-content: center; border-radius: 5px; }
+        .item img { width: 100%; height: 100%; object-fit: contain; }
+    </style>
+</head>
+<body class="container py-4">
+    <h2 class="text-center mb-4">Inventário</h2>
+    <div class="d-flex justify-content-center gap-4">
+        <div class="inventory p-3 border rounded" id="inventory">
+            <script>
+                for (let i = 0; i < 20; i++) {
+                    document.write('<div class="slot rounded shadow-sm" ondrop="drop(event)" ondragover="allowDrop(event)"></div>');
+                }
+            </script>
+        </div>
+        
+        <div class="equipment p-3 border rounded bg-light">
+            <h3 class="text-center">Equipamentos</h3>
+            <div class="mb-2">Arma: <div class="equip-slot rounded shadow-sm" id="weapon" data-type="arma" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+            <div class="mb-2">Escudo: <div class="equip-slot rounded shadow-sm" id="shield" data-type="escudo" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+            <div class="mb-2">Armadura: <div class="equip-slot rounded shadow-sm" id="armor" data-type="armadura" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+            <div class="mb-2">Botas: <div class="equip-slot rounded shadow-sm" id="boots" data-type="botas" ondrop="drop(event)" ondragover="allowDrop(event)"></div></div>
+        </div>
+    </div>
+    
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        
+        function drop(event) {
+            event.preventDefault();
+            let data = event.dataTransfer.getData("text");
+            let item = document.getElementById(data);
+            let targetSlot = event.target;
+
+            if (targetSlot.classList.contains("slot") || 
+                (targetSlot.classList.contains("equip-slot") && targetSlot.getAttribute("data-type") === item.getAttribute("data-type"))) {
+                targetSlot.appendChild(item);
+            }
+        }
+        
+        let inventory = document.getElementById("inventory");
+        let itemTypes = ["arma", "escudo", "armadura", "botas"];
+        let itemImages = {
+            "arma": "https://via.placeholder.com/40?text=Arma",
+            "escudo": "https://via.placeholder.com/40?text=Escudo",
+            "armadura": "https://via.placeholder.com/40?text=Armadura",
+            "botas": "https://via.placeholder.com/40?text=Botas"
+        };
+        
+        for (let i = 0; i < 4; i++) {
+            let item = document.createElement("div");
+            item.classList.add("item", "rounded", "shadow-sm");
+            item.id = "item-" + i;
+            item.setAttribute("data-type", itemTypes[i]);
+            item.draggable = true;
+            item.ondragstart = drag;
+            
+            let img = document.createElement("img");
+            img.src = itemImages[itemTypes[i]];
+            img.alt = itemTypes[i];
+            
+            item.appendChild(img);
+            inventory.children[i].appendChild(item);
+        }
+    </script>
+</body>
+</html>
